@@ -1,0 +1,32 @@
+{
+  "name": "user-search",
+  "version": "1.0.0",
+  "description": "User search aggregation API ",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@el2604.bc:DOF-Official/user-search.git"
+  },
+  "author": "oleg.korolenko.ext@proximus.com",
+  "license": "ISC"
+  "dependencies": {
+    "@proximus/middle-js": "1.2.15",
+    "cluster": "0.7.7",
+    "lodash": "4.15.0",
+    "moment": "^2.18.1",
+    "ramda": "0.23.0",
+    "request": "2.79.0"
+  },
+  "devDependencies": {
+    "body-parser": "latest",
+    "chai": "^3.5.0",
+    "cookie-parser": "latest",
+    "dom-parser": "^0.1.5",
+    "express": "latest",
+    "mocha": "^3.1.0",
+    "simple-mock": "^0.7.0"
+  }
+}
