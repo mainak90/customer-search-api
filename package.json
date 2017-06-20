@@ -4,6 +4,7 @@
   "description": "User search aggregation API ",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "test": "mocha test"
   },
   "repository": {
@@ -11,9 +12,8 @@
     "url": "git@el2604.bc:DOF-Official/user-search.git"
   },
   "author": "oleg.korolenko.ext@proximus.com",
-  "license": "ISC"
+  "license": "ISC",
   "dependencies": {
-    "@proximus/middle-js": "1.2.15",
     "cluster": "0.7.7",
     "lodash": "4.15.0",
     "moment": "^2.18.1",
