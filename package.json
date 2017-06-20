@@ -4,8 +4,9 @@
   "description": "User search aggregation API ",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
-    "test": "mocha test"
+    "start": "node src/app.js",
+    "test": "mocha test",
+    "lint": "./node_modules/.bin/eslint src"
   },
   "repository": {
     "type": "git",
@@ -15,6 +16,9 @@
   "license": "ISC",
   "dependencies": {
     "cluster": "0.7.7",
+    "eslint": "^4.0.0",
+    "eslint-plugin-import": "^2.3.0",
+    "eslint-plugin-node": "^5.0.0",
     "lodash": "4.15.0",
     "moment": "^2.18.1",
     "ramda": "0.23.0",
@@ -25,6 +29,10 @@
     "chai": "^3.5.0",
     "cookie-parser": "latest",
     "dom-parser": "^0.1.5",
+    "eslint": "^4.0.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
     "express": "latest",
     "mocha": "^3.1.0",
     "simple-mock": "^0.7.0"
