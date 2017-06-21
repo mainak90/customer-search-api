@@ -4,7 +4,8 @@ const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 const customersRoute = require('./routes/customers')
 const app = express()
-const port = process.env.PORT || 3000
+const config = require('../config')
+const port = process.env.PORT || config.port
 
 app.use(helmet())
 app.use(bodyParser.json())
