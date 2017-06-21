@@ -1,10 +1,12 @@
 const express = require('express')
+const helmet = require('helmet')
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 const customersRoute = require('./routes/customers')
 const app = express()
 const port = process.env.PORT || 3000
 
+app.use(helmet())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(cookieParser())
