@@ -33,6 +33,7 @@
   "devDependencies": {
     "body-parser": "latest",
     "chai": "^3.5.0",
+    "chai-as-promised": "^7.0.0",
     "cookie-parser": "latest",
     "dom-parser": "^0.1.5",
     "eslint": "^4.0.0",

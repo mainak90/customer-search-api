@@ -1,12 +1,16 @@
 const express = require('express')
 const router = express.Router()
-// const customerSearch = require('../search')
-const customerSearch = require('../services/cdb-cutomer.service')
+const _ = require('lodash')
+const config = require('../../config')
+const searchCustomer = require('../services/cdb-cutomer.service')
+const curriedSearchCustomer = _.curry(searchCustomer)(config)
 
 router.get('/', async (req, res) => {
   try {
-    const result = await customerSearch(req.query)
-    res.send(result)
+    // TODO validate query
+    const result = await curriedSearchCustomer(req.query)
+    const response = {message: [{searchCriteria: 'name', result: result}]}
+    res.send(response)
   } catch (e) {
     res.status(500).end()
   }
