@@ -1,14 +1,24 @@
 const fetch = require('node-fetch')
 
-async function searchCustomer (searchParams) {
+async function searchCustomer (config, searchParams) {
+  const url = config.service.cdbCustomer.url + '?firstName=' + searchParams.firstName + '&name=' + searchParams.name
   try {
-    const res = await fetch('http://el3923.bc:8496/cdb-customer-provider/cdbCustomer?name=Dupont&firstName=Rene')
-    if (res.status === 200) {
-      const json = await res.json()
-      return json.customers
-    } else return []
+    const res = await fetch(url)
+    switch (res.status) {
+      case 200:
+        return await res.json()
+      case 400:
+      case 404:
+      case 500:
+        const err = await res.json()
+        console.error(`error calling :  ${url} ,${err}`)
+        throw new Error(err)
+      default:
+        throw new Error(`not handled error code ${res.status}`)
+    }
   } catch (e) {
-    console.error(`error calling cdb endpoint,${e}`)
+    console.error(`error calling :  ${url} ,${e}`)
+    throw e
   }
 }
 module.exports = searchCustomer
