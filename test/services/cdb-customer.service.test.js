@@ -1,6 +1,7 @@
+/* eslint-disable no-undef */
 const simple = require('simple-mock')
-const commonReponse = require('../src/common/common-response')
-const searchCustomer = require('../src/services/cdb-cutomer.service')
+const searchCustomer = require('../../src/services/cdb-customer.service').search
+
 const fetch = require('node-fetch')
 
 const chai = require('chai')
@@ -9,6 +10,11 @@ chai.use(chaiAsPromised)
 chai.should()
 
 describe('cdb-customer search service', function () {
+
+  afterEach(() => {
+    simple.restore()
+  })
+
   const config = {
     service: {
       cdbCustomer: {
@@ -16,6 +22,7 @@ describe('cdb-customer search service', function () {
       }
     }
   }
+
   const searchParams = {
     firstName: 'Jack',
     name: 'Daniels'

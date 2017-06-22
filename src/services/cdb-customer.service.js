@@ -2,6 +2,7 @@ const fetch = require('node-fetch')
 
 async function searchCustomer (config, searchParams) {
   const url = config.service.cdbCustomer.url + '?firstName=' + searchParams.firstName + '&name=' + searchParams.name
+
   try {
     const res = await fetch(url)
     switch (res.status) {
@@ -21,4 +22,7 @@ async function searchCustomer (config, searchParams) {
     throw e
   }
 }
-module.exports = searchCustomer
+
+module.exports = {
+  search: searchCustomer
+}
