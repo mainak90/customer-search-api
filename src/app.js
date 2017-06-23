@@ -21,14 +21,18 @@ if (cluster.isMaster) {
   })
 } else {
   const app = express()
+
   app.use(helmet())
   app.use(bodyParser.json())
   app.use(bodyParser.urlencoded({extended: false}))
   app.use(validator())
   app.use(morgan('combined', {stream: logger.stream}))
-
   app.use(validationRoute)
-  app.use('/customers', customersRoute)
+
+  const appRouter = express.Router()
+  app.use('/customer-search', appRouter)
+  appRouter.use('/customers', customersRoute)
+
   app.listen(port, () => logger.info(`customer-search app started on port ${port}!`))
 }
 
