@@ -1,15 +1,22 @@
 const express = require('express')
-const cookieParser = require('cookie-parser')
+const helmet = require('helmet')
 const bodyParser = require('body-parser')
-const userRoute = require('./routes/user')
-
+const validationRoute = require('./routes/validation')
+const customersRoute = require('./routes/customers')
+const validator = require('express-validator')
 const app = express()
-const port = process.env.PORT || 3000
+const config = require('../config')
+const port = process.env.PORT || config.port
+const logger = require('./logger')
+const morgan = require('morgan')
 
+app.use(helmet())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
-app.use(cookieParser())
+app.use(validator())
+app.use(morgan('combined', { stream: logger.stream }))
 
-app.use('/user', userRoute)
+app.use(validationRoute)
+app.use('/customers', customersRoute)
 
-app.listen(port, () => console.log(`App listening on port ${port}!`))
+app.listen(port, () => logger.info(`customer-search app started on port ${port}!`))
