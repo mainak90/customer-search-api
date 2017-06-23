@@ -26,9 +26,11 @@
     "helmet": "^3.6.1",
     "lodash": "4.15.0",
     "moment": "^2.18.1",
+    "morgan": "^1.8.2",
     "node-fetch": "^1.7.1",
     "ramda": "0.23.0",
-    "request": "2.79.0"
+    "request": "2.79.0",
+    "winston": "^2.3.1"
   },
   "devDependencies": {
     "body-parser": "latest",

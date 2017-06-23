@@ -2,6 +2,7 @@ const express = require('express')
 const config = require('../../config')
 const customerService = require('../services/cdb-customer.service')
 const commonResponses = require('../common/response')
+const logger = require('../logger')
 
 const router = express.Router()
 
