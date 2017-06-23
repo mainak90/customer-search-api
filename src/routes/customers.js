@@ -7,7 +7,6 @@ const router = express.Router()
 
 router.get('/', async (req, res) => {
   try {
-    // TODO validate query & check mandatory query params
     const result = await
       customerService.search(config, req.query)
     const response = {message: [{searchCriteria: 'name', result: result}]}

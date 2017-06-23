@@ -13,7 +13,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(validator())
 
-app.use(validationRoute.validate)
+app.use(validationRoute)
 app.use('/customers', customersRoute)
 
 app.listen(port, () => console.log(`customer-search started on port ${port}!`))

@@ -9,7 +9,7 @@
     "start:itt": "set NODE_ENV=itt&& node src/app.js",
     "start:uat": "set NODE_ENV=uat&& node src/app.js",
     "start:prod": "set NODE_ENV=prod&& node src/app.js",
-    "test": "mocha test",
+    "test": "node node_modules/mocha/bin/mocha test --recursive",
     "lint": "./node_modules/.bin/eslint src"
   },
   "repository": {
