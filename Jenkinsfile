@@ -19,8 +19,7 @@ try {
                         playbook: '/home/msservice/ansible/copy.yml',
                         inventory: '/home/msservice/ansible/hosts/hosts.ini',
                         extras: '--extra-vars "app=\'customer-search\' env=\'' +
-                                "${TARGET_ENV}"
-                                + '\' ver=\'1.3.0\' bucket=\'config\'"'
+                                "${TARGET_ENV}""'
                 )
             currentBuild.result = "SUCCESS"
             mail body: "Build was a success! Check details at ${env.BUILD_URL}console.", from: "architecture.jenkins@belgacom.be", subject: "Build SUCCESS in Jenkins: ${env.JOB_NAME} # ${env.BUILD_NUMBER}", to: "pxs.dof.dev.team@proximus.com"
