@@ -4,29 +4,49 @@
   "description": "User search aggregation API ",
   "main": "app.js",
   "scripts": {
-    "test": "mocha test"
+    "start": "node src/app.js",
+    "start:watch": "./node_modules/.bin/nodemon src/app.js",
+    "start:itt": "set NODE_ENV=itt&& node src/app.js",
+    "start:uat": "set NODE_ENV=uat&& node src/app.js",
+    "start:prod": "set NODE_ENV=prod&& node src/app.js",
+    "test": "node node_modules/mocha/bin/mocha test --recursive",
+    "lint": "./node_modules/.bin/eslint src"
   },
   "repository": {
     "type": "git",
     "url": "git@el2604.bc:DOF-Official/user-search.git"
   },
   "author": "oleg.korolenko.ext@proximus.com",
-  "license": "ISC"
+  "license": "ISC",
   "dependencies": {
-    "@proximus/middle-js": "1.2.15",
     "cluster": "0.7.7",
+    "eslint": "^4.0.0",
+    "eslint-plugin-import": "^2.3.0",
+    "eslint-plugin-node": "^5.0.0",
+    "helmet": "^3.6.1",
     "lodash": "4.15.0",
     "moment": "^2.18.1",
+    "morgan": "^1.8.2",
+    "node-fetch": "^1.7.1",
     "ramda": "0.23.0",
-    "request": "2.79.0"
+    "request": "2.79.0",
+    "winston": "^2.3.1"
   },
   "devDependencies": {
     "body-parser": "latest",
     "chai": "^3.5.0",
+    "chai-as-promised": "^7.0.0",
     "cookie-parser": "latest",
     "dom-parser": "^0.1.5",
+    "eslint": "^4.0.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
     "express": "latest",
+    "express-validator": "^3.2.0",
     "mocha": "^3.1.0",
-    "simple-mock": "^0.7.0"
+    "nodemon": "^1.11.0",
+    "simple-mock": "^0.7.0",
+    "supertest": "^3.0.0"
   }
 }
