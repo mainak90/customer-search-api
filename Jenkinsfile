@@ -16,9 +16,9 @@ try {
             stage 'deploy'
 
                 ansiblePlaybook(
-                        playbook: '/home/msservice/ansible/deploy.yml',
+                        playbook: '/home/msservice/ansible/copy.yml',
                         inventory: '/home/msservice/ansible/hosts/hosts.ini',
-                        extras: '--extra-vars "app=\'authorization-profiles\' env=\'' +
+                        extras: '--extra-vars "app=\'customer-search\' env=\'' +
                                 "${TARGET_ENV}"
                                 + '\' ver=\'1.3.0\' bucket=\'config\'"'
                 )
