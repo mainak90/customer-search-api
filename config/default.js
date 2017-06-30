@@ -2,7 +2,7 @@ module.exports = {
   port: 5000,
   service: {
     cdbCustomer: {
-      url: 'http://el3923.bc:8496/cdb-customer-provider/cdbCustomer'
+      url: 'http://el3923.bc:8496/cdb-customer-provider'
     }
   },
   log: {

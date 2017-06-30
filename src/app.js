@@ -27,7 +27,8 @@ if (cluster.isMaster) {
   app.use(bodyParser.urlencoded({extended: false}))
   app.use(validator())
   app.use(morgan('combined', {stream: logger.stream}))
-  app.use(validationRoute)
+
+  // app.use(validationRoute)
 
   const appRouter = express.Router()
   app.use('/customer-search', appRouter)

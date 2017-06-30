@@ -28,39 +28,75 @@ describe('/customers', function () {
     server.close()
     simple.restore()
   })
+  describe('GET /customers by name & firstname ', function () {
+    // noinspection JSCheckFunctionSignatures
+    it('should return 200 with customers when cdb service returns results', (done) => {
+      const cdbResponse = {'customers': [{'customerId': 1}]}
+      const expectedResponse = {message: [{searchCriteria: 'byName', result: cdbResponse}]}
+      simple.mock(customerService, 'search').resolveWith(cdbResponse)
 
-  // noinspection JSCheckFunctionSignatures
-  it('should return 200 with customers when cdb service returns results', (done) => {
-    const cdbResponse = {'customers': [{'customerId': 1}]}
-    const expectedResponse = {message: [{searchCriteria: 'name', result: cdbResponse}]}
-    simple.mock(customerService, 'search').resolveWith(cdbResponse)
+      request(app)
+        .get('/customers?firstName=Jack&name=Daniels')
+        .expect(200)
+        .expect('Content-Type', /json/)
+        .end((err, {body: result}) => {
+          if (err) throw err
+          result.should.have.property('message')
+          result.should.be.deep.equals(expectedResponse)
+          done()
+        })
 
-    request(app)
-      .get('/customers?firstName=Jack&name=Daniels')
-      .expect(200)
-      .expect('Content-Type', /json/)
-      .end((err, {body: result}) => {
-        if (err) throw err
-        result.should.have.property('message')
-        result.should.be.deep.equals(expectedResponse)
-        done()
-      })
+    })
 
+    it('should return 500 with error message when service throws an error', (done) => {
+      const err = new Error('my error')
+      const expectedResponse = {message: 'server error', reason: err.message}
+      simple.mock(customerService, 'search').rejectWith(err)
+
+      request(app)
+        .get('/customers?firstName=Jack&name=Daniels')
+        .expect(500)
+        .expect('Content-Type', /json/)
+        .end((err, {body: result}) => {
+          if (err) throw err
+          result.should.be.deep.equals(expectedResponse)
+          done()
+        })
+    })
   })
+  describe('GET /customers/accessNumber', function () {
+    // noinspection JSCheckFunctionSignatures
+    it('should return 200 with customers when cdb service returns results', (done) => {
+      const cdbResponse = {'customers': [{'customerId': 1}]}
+      const expectedResponse = {message: [{searchCriteria: 'byAccessNumber', result: cdbResponse}]}
+      simple.mock(customerService, 'searchByAccessNumber').resolveWith(cdbResponse)
 
-  it('should return 500 with error message when service throws an error', (done) => {
-    const err = new Error('my error')
-    const expectedResponse = {message: 'server error', reason: err.message}
-    simple.mock(customerService, 'search').rejectWith(err)
+      request(app)
+        .get('/customers/accessNumber/026737599')
+        .expect(200)
+        .expect('Content-Type', /json/)
+        .end((err, {body: result}) => {
+          if (err) throw err
+          result.should.have.property('message')
+          result.should.be.deep.equals(expectedResponse)
+          done()
+        })
+    })
 
-    request(app)
-      .get('/customers?firstName=Jack&name=Daniels')
-      .expect(500)
-      .expect('Content-Type', /json/)
-      .end((err, {body: result}) => {
-        if (err) throw err
-        result.should.be.deep.equals(expectedResponse)
-        done()
-      })
+    it('should return 500 with error message when service throws an error', (done) => {
+      const err = new Error('my error')
+      const expectedResponse = {message: 'server error', reason: err.message}
+      simple.mock(customerService, 'searchByAccessNumber').rejectWith(err)
+
+      request(app)
+        .get('/customers/accessNumber/026737599')
+        .expect(500)
+        .expect('Content-Type', /json/)
+        .end((err, {body: result}) => {
+          if (err) throw err
+          result.should.be.deep.equals(expectedResponse)
+          done()
+        })
+    })
   })
 })
