@@ -7,9 +7,9 @@ const config = require('../config')
 const port = process.env.PORT || config.port
 const logger = require('./logger')
 const morgan = require('morgan')
+const validation = require('./middlewares/validation')
 
 const app = express()
-
 app.use(helmet())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
@@ -18,9 +18,6 @@ app.use(morgan('combined', {stream: logger.stream}))
 
 const appRouter = express.Router()
 app.use('/customer-search', appRouter)
-appRouter.use('/customers', customersRoute)
+appRouter.use('/customers', customersRoute(validation))
 
 app.listen(port, () => logger.info(`customer-search app started on port ${port}!`))
-
-
-

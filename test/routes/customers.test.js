@@ -6,9 +6,7 @@ const chai = require('chai')
 const chaiAsPromised = require('chai-as-promised')
 
 const validation = require('../../src/middlewares/validation')
-const validationSpy = simple.spy((req, res, next) => { next() })
-simple.mock(validation, 'validateQuery').callFn(validationSpy)
-simple.mock(validation, 'validateReq').callFn(validationSpy)
+
 
 const bodyParser = require('body-parser')
 const customerService = require('../../src/services/cdb-customer.service')
@@ -23,7 +21,10 @@ let server
 
 describe('/customers', function () {
   before(() => {
-    app.use('/customers', customersRoute)
+    const validationSpy = simple.spy((req, res, next) => { next() })
+    simple.mock(validation, 'validateQuery').callFn(validationSpy)
+    simple.mock(validation, 'validateReq').callFn(validationSpy)
+    app.use('/customers', customersRoute(validation))
   })
 
   beforeEach(() => {

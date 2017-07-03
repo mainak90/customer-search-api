@@ -21,6 +21,10 @@ describe('validation middleware', function () {
     server.close()
     simple.restore()
   })
+  after(() => {
+    simple.restore()
+  })
+  
   describe('validateQuery', () => {
     before(() => {
       app = express()

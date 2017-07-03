@@ -1,4 +1,3 @@
-const _ = require('lodash')
 // extracted from @proximus/middle-js
 let badRequest = (res, reason) => {
   res.status(400)
