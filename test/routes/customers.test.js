@@ -4,9 +4,15 @@ const request = require('supertest')
 const express = require('express')
 const chai = require('chai')
 const chaiAsPromised = require('chai-as-promised')
-const customersRoute = require('../../src/routes/customers')
+
+const validation = require('../../src/middlewares/validation')
+const validationSpy = simple.spy((req, res, next) => { next() })
+simple.mock(validation, 'validateQuery').callFn(validationSpy)
+simple.mock(validation, 'validateReq').callFn(validationSpy)
+
 const bodyParser = require('body-parser')
 const customerService = require('../../src/services/cdb-customer.service')
+const customersRoute = require('../../src/routes/customers')
 
 chai.use(chaiAsPromised)
 chai.should()

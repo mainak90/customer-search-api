@@ -2,10 +2,11 @@ const express = require('express')
 const config = require('../../config')
 const customerService = require('../services/cdb-customer.service')
 const commonResponses = require('../common/response')
+const validation = require('../middlewares/validation')
 
 const router = express.Router()
 
-router.get('/', async (req, res) => {
+router.get('/', validation.validateQuery, async (req, res) => {
   try {
     const result = await
       customerService.search(config, req.query)
@@ -16,7 +17,7 @@ router.get('/', async (req, res) => {
   }
 })
 
-router.get('/accessNumber/:accessNumber', async (req, res) => {
+router.get('/accessNumber/:accessNumber', validation.validateReq, async (req, res) => {
   try {
     const result = await
       customerService.searchByAccessNumber(config, req.params)

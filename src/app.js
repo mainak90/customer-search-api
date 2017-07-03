@@ -1,7 +1,6 @@
 const express = require('express')
 const helmet = require('helmet')
 const bodyParser = require('body-parser')
-const validationRoute = require('./routes/validation')
 const customersRoute = require('./routes/customers')
 const validator = require('express-validator')
 const config = require('../config')
@@ -17,14 +16,11 @@ app.use(bodyParser.urlencoded({extended: false}))
 app.use(validator())
 app.use(morgan('combined', {stream: logger.stream}))
 
-app.use(validationRoute)
-
 const appRouter = express.Router()
 app.use('/customer-search', appRouter)
 appRouter.use('/customers', customersRoute)
 
 app.listen(port, () => logger.info(`customer-search app started on port ${port}!`))
-}
 
 
 
