@@ -2,9 +2,18 @@ const fetch = require('node-fetch')
 const logger = require('../logger')
 
 async function searchCustomer (config, searchParams) {
-  const url = config.service.cdbCustomer.url + '?firstName=' + searchParams.firstName + '&name=' + searchParams.name
+  const url = `${config.service.cdbCustomer.url}/cdbCustomer?firstName=${searchParams.firstName}&name=${searchParams.name}`
   logger.info(`cdb-customer-service::will call ${url}`)
+  return doRequest(url)
+}
 
+async function searchCustomerByAccessNumber (config, searchParams) {
+  const url = `${config.service.cdbCustomer.url}/accessNumber/${searchParams.accessNumber}/cdbCustomer`
+  logger.info(`cdb-customer-service::will call ${url}`)
+  return doRequest(url)
+}
+
+async function doRequest (url) {
   try {
     const res = await fetch(url)
     switch (res.status) {
@@ -27,5 +36,6 @@ async function searchCustomer (config, searchParams) {
 }
 
 module.exports = {
-  search: searchCustomer
+  search: searchCustomer,
+  searchByAccessNumber: searchCustomerByAccessNumber
 }
