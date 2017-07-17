@@ -3,6 +3,11 @@ module.exports = {
   service: {
     cdbCustomer: {
       url: 'http://el3923.bc:8496/cdb-customer-provider'
+    },
+    installbase: {
+      // url: 'http://jboss10021.bc:22081/installbase'
+      // added temp UAT since ITT doesn't work
+      url: 'http://jboss25021.ebc.local:22141/installbase'
     }
   },
   log: {

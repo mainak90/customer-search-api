@@ -1,5 +1,13 @@
 module.exports = {
   port: 5000,
+  service: {
+    cdbCustomer: {
+      url: 'http://el4168.ebc.local:8496/cdb-customer-provider'
+    },
+    installbase: {
+      url: 'http://jboss25021.ebc.local:22141/installbase'
+    }
+  },
   log: {
     file: {
       level: 'debug',
