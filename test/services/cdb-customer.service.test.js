@@ -1,7 +1,6 @@
 /* eslint-disable no-undef */
 const simple = require('simple-mock')
 const fetch = require('node-fetch')
-
 const chai = require('chai')
 const chaiAsPromised = require('chai-as-promised')
 chai.use(chaiAsPromised)
