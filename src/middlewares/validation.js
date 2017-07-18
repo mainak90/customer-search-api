@@ -9,8 +9,13 @@ const validateQuery = async (req, res, next) => {
   req.checkQuery('firstName', 'firstName should have max length of 50').isLength({max: 50})
   await treatValidationResult(req, res, next)
 }
-const validateReq = async (req, res, next) => {
+const validateAccessNumber = async (req, res, next) => {
   req.checkParams(['accessNumber'], 'accessNumber should contain only digits').isNumeric()
+  await treatValidationResult(req, res, next)
+}
+
+const validateMsisdn = async (req, res, next) => {
+  req.checkParams(['msisdn'], 'msisdn should be a BE mobile phone').matches(validationRegexp.mobilePhone, 'i')
   await treatValidationResult(req, res, next)
 }
 
@@ -26,5 +31,6 @@ const treatValidationResult = async (req, res, next) => {
 
 module.exports = {
   validateQuery: validateQuery,
-  validateReq: validateReq
+  validateAccessNumber: validateAccessNumber,
+  validateMsisdn: validateMsisdn
 }

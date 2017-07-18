@@ -157,14 +157,14 @@ describe('validation middleware', function () {
 
   })
 
-  describe('validateReq', () => {
+  describe('validateAccessNumber', () => {
     before(() => {
       app = express()
       app.use(bodyParser.json())
       app.use(bodyParser.urlencoded({extended: false}))
       app.use(validator())
       const router = express.Router()
-      router.get('/customers/accessNumber/:accessNumber', validationRoute.validateReq, async (req, res) => {
+      router.get('/customers/accessNumber/:accessNumber', validationRoute.validateAccessNumber, async (req, res) => {
         res.send({result: 'ok'})
       })
       app.use(router)
@@ -192,6 +192,54 @@ describe('validation middleware', function () {
         })
     })
   })
+
+
+  describe('validateMsisdn', () => {
+    before(() => {
+      app = express()
+      app.use(bodyParser.json())
+      app.use(bodyParser.urlencoded({extended: false}))
+      app.use(validator())
+      const router = express.Router()
+      router.get('/customers/msisdn/:msisdn', validationRoute.validateMsisdn, async (req, res) => {
+        res.send({result: 'ok'})
+      })
+      app.use(router)
+    })
+    it('should return 404 when msisdn contains non-digit characters', (done) => {
+      request(app)
+        .get('/customers/msisdn/a13')
+        .expect(400)
+        .expect('Content-Type', /json/)
+        .end((err, {body: result}) => {
+          if (err) throw err
+          checkResultErrorMessage(result, ['msisdn should be a BE mobile phone'])
+          done()
+        })
+    })
+    it('should return 404 when msisdn contains non-mobile phone', (done) => {
+      request(app)
+        .get('/customers/msisdn/02345678')
+        .expect(400)
+        .expect('Content-Type', /json/)
+        .end((err, {body: result}) => {
+          if (err) throw err
+          checkResultErrorMessage(result, ['msisdn should be a BE mobile phone'])
+          done()
+        })
+    })
+    it('should return 200 if params are passing the validation', (done) => {
+      request(app)
+        .get('/customers/msisdn/0485456789')
+        .expect(200)
+        .expect('Content-Type', /json/)
+        .end((err, {body: result}) => {
+          if (err) throw err
+          done()
+        })
+    })
+  })
+
   const checkResultErrorMessage = (result, reasons) => {
     result.should.have.property('message')
     result.should.have.property('reason')

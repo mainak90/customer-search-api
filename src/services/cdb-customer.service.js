@@ -1,41 +1,26 @@
-const fetch = require('node-fetch')
 const logger = require('../logger')
+const reqHandler = require('../common/request.handler')
 
 async function searchCustomer (config, searchParams) {
   const url = `${config.service.cdbCustomer.url}/cdbCustomer?firstName=${searchParams.firstName}&name=${searchParams.name}`
   logger.info(`cdb-customer-service::will call ${url}`)
-  return doRequest(url)
+  return reqHandler.get(url)
 }
 
 async function searchCustomerByAccessNumber (config, searchParams) {
   const url = `${config.service.cdbCustomer.url}/accessNumber/${searchParams.accessNumber}/cdbCustomer`
   logger.info(`cdb-customer-service::will call ${url}`)
-  return doRequest(url)
+  return reqHandler.get(url)
 }
 
-async function doRequest (url) {
-  try {
-    const res = await fetch(url)
-    switch (res.status) {
-      case 200:
-        return await res.json()
-      case 400:
-      case 404:
-      case 500:
-        const err = await res.json()
-
-        logger.error('error calling ', url, err)
-        throw new Error(err)
-      default:
-        throw new Error(`not handled error code ${res.status}`)
-    }
-  } catch (e) {
-    logger.error(`error calling :  ${url} ,${e}`)
-    throw e
-  }
+async function searchCustomerByPni (config, pniAccount) {
+  const url = `${config.service.cdbCustomer.url}/pniAccount/${pniAccount}/cdbCustomer`
+  logger.info(`cdb-customer-service::will call ${url}`)
+  return reqHandler.get(url)
 }
 
 module.exports = {
   search: searchCustomer,
-  searchByAccessNumber: searchCustomerByAccessNumber
+  searchByAccessNumber: searchCustomerByAccessNumber,
+  searchByPni: searchCustomerByPni
 }
