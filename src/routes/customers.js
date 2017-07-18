@@ -11,7 +11,7 @@ const customersRoute = (validation) => {
     try {
       const result = await
         customerService.search(config, req.query)
-      const response = {message: [{searchCriteria: 'byName', result: result}]}
+      const response = {message: [{searchCriteria: 'byName', customers: result.customers}]}
       res.send(response)
     } catch (e) {
       commonResponses.serverError(res, e)

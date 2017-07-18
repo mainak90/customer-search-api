@@ -112,7 +112,7 @@ describe('/customers', function () {
   describe('GET /customers/msisdn', function () {
     it('should return 200 with empty customer array when installbase service doesn\'t return subscriptions ', (done) => {
       const installBaseResponse = {mobileSubscriptions: []}
-      const expectedResponse = {message: [{searchCriteria: 'byMsisdn', result: []}]}
+      const expectedResponse = {message: [{searchCriteria: 'byMsisdn', customers: []}]}
       simple.mock(installBaseService, 'search').resolveWith(installBaseResponse)
 
       request(app)
@@ -133,7 +133,7 @@ describe('/customers', function () {
           msisdn: '0476200312'
         }]
       }
-      const expectedResponse = {message: [{searchCriteria: 'byMsisdn', result: []}]}
+      const expectedResponse = {message: [{searchCriteria: 'byMsisdn', customers: []}]}
       simple.mock(installBaseService, 'search').resolveWith(installBaseResponse)
 
       request(app)
@@ -155,8 +155,8 @@ describe('/customers', function () {
           pniAccount: '10387806'
         }]
       }
-      const cdbResponse = {'customers': [{'customerId': 1}]}
-      const expectedResponse = {message: [{searchCriteria: 'byMsisdn', result: cdbResponse}]}
+      const cdbResponse = {'message': {'customerId': 1}}
+      const expectedResponse = {message: [{searchCriteria: 'byMsisdn', customers: [cdbResponse.message]}]}
       simple.mock(installBaseService, 'search').resolveWith(installBaseResponse)
       simple.mock(customerService, 'searchByPni').resolveWith(cdbResponse)
 
