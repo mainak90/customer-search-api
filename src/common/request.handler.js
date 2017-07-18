@@ -12,7 +12,7 @@ async function get (url) {
       case 500:
         const err = await res.json()
         logger.error('error calling ', url, err)
-        throw new Error(err)
+        throw new Error(err.message)
       default:
         throw new Error(`not handled error code ${res.status}`)
     }
