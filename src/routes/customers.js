@@ -9,8 +9,10 @@ const customersRoute = (validation) => {
   const router = express.Router()
   router.get('/', validation.validateQuery, async (req, res) => {
     try {
-      const result = await customerService.search(config, req.query)
-      res.send({message: [{searchCriteria: 'byName', result: result}]})
+      const result = await
+        customerService.search(config, req.query)
+      const response = {message: [{searchCriteria: 'byName', result: result}]}
+      res.send(response)
     } catch (e) {
       commonResponses.serverError(res, e)
     }
@@ -18,8 +20,10 @@ const customersRoute = (validation) => {
 
   router.get('/accessNumber/:accessNumber', validation.validateAccessNumber, async (req, res) => {
     try {
-      const result = await customerService.searchByAccessNumber(config, req.params)
-      res.send({message: [{searchCriteria: 'byAccessNumber', result: result}]})
+      const result = await
+        customerService.searchByAccessNumber(config, req.params)
+      const response = {message: [{searchCriteria: 'byAccessNumber', customers: [result.message]}]}
+      res.send(response)
     } catch (e) {
       commonResponses.serverError(res, e)
     }
@@ -32,9 +36,9 @@ const customersRoute = (validation) => {
         subs.mobileSubscriptions.length > 0 &&
         subs.mobileSubscriptions[0].pniAccount) {
         const result = await customerService.searchByPni(config, subs.mobileSubscriptions[0].pniAccount)
-        res.send({message: [{searchCriteria: 'byMsisdn', result: result}]})
+        res.send({message: [{searchCriteria: 'byMsisdn', customers: [result.message]}]})
       } else {
-        res.send({message: [{searchCriteria: 'byMsisdn', result: []}]})
+        res.send({message: [{searchCriteria: 'byMsisdn', customers: []}]})
       }
     } catch (e) {
       commonResponses.serverError(res, e)

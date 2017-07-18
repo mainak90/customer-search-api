@@ -40,8 +40,8 @@ describe('/customers', function () {
   describe('GET /customers by name & firstname ', function () {
     // noinspection JSCheckFunctionSignatures
     it('should return 200 with customers when cdb service returns results', (done) => {
-      const cdbResponse = {'customers': [{'customerId': 1}]}
-      const expectedResponse = {message: [{searchCriteria: 'byName', result: cdbResponse}]}
+      const cdbResponse = {customers: [{'customerId': 1}]}
+      const expectedResponse = {message: [{searchCriteria: 'byName', customers: cdbResponse.customers}]}
       simple.mock(customerService, 'search').resolveWith(cdbResponse)
 
       request(app)
@@ -76,8 +76,8 @@ describe('/customers', function () {
   describe('GET /customers/accessNumber', function () {
     // noinspection JSCheckFunctionSignatures
     it('should return 200 with customers when cdb service returns results', (done) => {
-      const cdbResponse = {'customers': [{'customerId': 1}]}
-      const expectedResponse = {message: [{searchCriteria: 'byAccessNumber', result: cdbResponse}]}
+      const cdbResponse = {message: {customerId: 1}}
+      const expectedResponse = {message: [{searchCriteria: 'byAccessNumber', customers: [cdbResponse.message]}]}
       simple.mock(customerService, 'searchByAccessNumber').resolveWith(cdbResponse)
 
       request(app)
