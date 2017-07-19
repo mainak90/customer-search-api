@@ -7,6 +7,12 @@ async function searchCustomer (config, searchParams) {
   return reqHandler.get(url)
 }
 
+async function searchCustomerByZip (config, searchParams) {
+  const url = `${config.service.cdbCustomer.url}/cdbCustomer?firstName=${searchParams.firstName}&name=${searchParams.name}&zip=${searchParams.zip}&houseNumber=${searchParams.houseNumber}`
+  logger.info(`cdb-customer-service::will call ${url}`)
+  return reqHandler.get(url)
+}
+
 async function searchCustomerByAccessNumber (config, searchParams) {
   const url = `${config.service.cdbCustomer.url}/accessNumber/${searchParams.accessNumber}/cdbCustomer`
   logger.info(`cdb-customer-service::will call ${url}`)
