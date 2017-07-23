@@ -7,6 +7,13 @@ const validateQuery = async (req, res, next) => {
   req.checkQuery('firstName', 'firstName should be one of alpha characters').matches(validationRegexp.alphaWithDashAndQuote, 'i')
   req.checkQuery('name', 'name should have max length of 50').isLength({max: 50})
   req.checkQuery('firstName', 'firstName should have max length of 50').isLength({max: 50})
+  if (req.query.houseNumber) {
+    req.checkQuery('houseNumber', 'houseNumber should be numeric string').isInt()
+  }
+  if (req.query.zip) {
+    req.checkQuery('zip', 'zip should be numeric string').isInt()
+    req.checkQuery('zip', 'zip should have max 4 digits').isLength({max: 4})
+  }
   await treatValidationResult(req, res, next)
 }
 const validateAccessNumber = async (req, res, next) => {

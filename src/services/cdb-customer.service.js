@@ -2,13 +2,13 @@ const logger = require('../logger')
 const reqHandler = require('../common/request.handler')
 
 async function searchCustomer (config, searchParams) {
-  const url = `${config.service.cdbCustomer.url}/cdbCustomer?firstName=${searchParams.firstName}&name=${searchParams.name}`
-  logger.info(`cdb-customer-service::will call ${url}`)
-  return reqHandler.get(url)
-}
-
-async function searchCustomerByZip (config, searchParams) {
-  const url = `${config.service.cdbCustomer.url}/cdbCustomer?firstName=${searchParams.firstName}&name=${searchParams.name}&zip=${searchParams.zip}&houseNumber=${searchParams.houseNumber}`
+  let url = `${config.service.cdbCustomer.url}/cdbCustomer?firstName=${searchParams.firstName}&name=${searchParams.name}`
+  if (searchParams.zip) {
+    url = `${url}&zip=${searchParams.zip}`
+  }
+  if (searchParams.houseNumber) {
+    url = `${url}&houseNumber=${searchParams.houseNumber}`
+  }
   logger.info(`cdb-customer-service::will call ${url}`)
   return reqHandler.get(url)
 }

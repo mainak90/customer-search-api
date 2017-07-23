@@ -24,7 +24,7 @@ describe('validation middleware', function () {
   after(() => {
     simple.restore()
   })
-  
+
   describe('validateQuery', () => {
     before(() => {
       app = express()
@@ -52,7 +52,19 @@ describe('validation middleware', function () {
           done()
         })
     })
-    it('should return 404 no firstName defined', (done) => {
+    it('should return 400 if houseNumber is alphabetical', (done) => {
+      request(app)
+        .get('/customers?name=Dupont&firstName=Jean&houseNumber=B')
+        .expect(400)
+        .expect('Content-Type', /json/)
+        .end((err, {body: result}) => {
+          if (err) throw err
+          result.reason.should.contain('houseNumber should be numeric string')
+          checkResultErrorMessage(result, ['houseNumber should be numeric string'])
+          done()
+        })
+    })
+    it('should return 400 no firstName defined', (done) => {
       request(app)
         .get('/customers?name=Jack')
         .expect(400)
@@ -74,7 +86,6 @@ describe('validation middleware', function () {
           checkResultErrorMessage(result, ['name should be one of alpha characters'])
           done()
         })
-
     })
     it('should return 404 name contains not allowed numeric  characters', (done) => {
       request(app)
@@ -154,7 +165,6 @@ describe('validation middleware', function () {
           done()
         })
     })
-
   })
 
   describe('validateAccessNumber', () => {
@@ -192,7 +202,6 @@ describe('validation middleware', function () {
         })
     })
   })
-
 
   describe('validateMsisdn', () => {
     before(() => {
@@ -247,6 +256,5 @@ describe('validation middleware', function () {
     reasons.forEach(reason => {
       result.reason.should.contain(reason)
     })
-
   }
 })

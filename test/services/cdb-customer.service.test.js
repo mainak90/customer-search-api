@@ -8,7 +8,6 @@ chai.use(chaiAsPromised)
 chai.should()
 
 describe('cdb-customer search service', function () {
-
   afterEach(() => {
     simple.restore()
   })
@@ -28,6 +27,26 @@ describe('cdb-customer search service', function () {
       firstName: 'Jack',
       name: 'Daniels'
     }
+    const searchParamsWithZip = {
+      firstName: 'Jean',
+      name: 'Dupont',
+      houseNumber: 21,
+      zip: 6762
+    }
+
+    it('should return found customers with name, firstname, zip and housenumber when call to url returns results', (done) => {
+      const customers = {'customers': [{'customerId': 1}]}
+      simple.mock(reqHandler, 'get').returnWith(customers)
+
+      searchCustomer(config, searchParamsWithZip).should.eventually.equal(customers).notify(done)
+    })
+
+    it('should throw an error  when call to underlying service fails with zipcode and houseNumber', (done) => {
+      const err = new Error('my error')
+      simple.mock(reqHandler, 'get').throwWith(err)
+
+      searchCustomer(config, searchParamsWithZip).should.be.rejectedWith(err).notify(done)
+    })
 
     // noinspection JSCheckFunctionSignatures
     it('should return found customers when call to urn returns results', (done) => {
@@ -43,7 +62,6 @@ describe('cdb-customer search service', function () {
 
       searchCustomer(config, searchParams).should.be.rejectedWith(err).notify(done)
     })
-
   })
 
   describe('searchCustomerByAccessNumber', function () {

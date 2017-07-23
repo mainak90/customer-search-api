@@ -2,7 +2,7 @@ module.exports = {
   port: 5000,
   service: {
     cdbCustomer: {
-      url: 'http://el3923.bc:8496/cdb-customer-provider'
+      url: 'http://el4168.ebc.local:8496/cdb-customer-provider'
     },
     installbase: {
       // url: 'http://jboss10021.bc:22081/installbase'
